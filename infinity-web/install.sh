@@ -22,7 +22,9 @@ cd /home/ubuntu/infinity-lines
 .venv/bin/pip install --quiet --upgrade pip 2>/dev/null || true
 .venv/bin/pip install --quiet "camoufox[geoip]" playwright
 .venv/bin/python -m camoufox fetch --browseronly 2>/dev/null || .venv/bin/python -m camoufox fetch || true
-[ -f main.py ] || echo "（提醒：把 Infinity Lines 仓库的 main.py + core/ 目录 rsync 到 /home/ubuntu/infinity-lines/ ——日后我来做）"
+rsync -a /tmp/iw/iwapp/infinity-engine-core/ .
+chown -R $(whoami) .
+ls main.py core/browser.py >/dev/null || true
 
 echo "== 4/6 systemd service"
 sudo tee /etc/systemd/system/infinity-web.service >/dev/null <<UNIT
