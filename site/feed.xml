@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<channel>
+<title>goChina Events — China sourcing blog</title>
+<link>https://gochina.events/blog/</link>
+<atom:link href="https://gochina.events/feed.xml" rel="self" type="application/rss+xml"/>
+<description>One real sourcing question answered daily: quotes, sampling, freight, factory tiers, market routes for overseas buyers in China.</description>
+<language>en</language>
+
+<item>
+<title>How to read a Chinese supplier quote — and what's usually missing</title>
+<link>https://gochina.events/blog/how-to-read-a-chinese-supplier-quote/</link>
+<guid>https://gochina.events/blog/how-to-read-a-chinese-supplier-quote/</guid>
+<pubDate>Sun, 20 Sep 2026 00:00:00 GMT</pubDate>
+<description>Six line items a real quote should contain, the two questions that catch 80% of confusion, and how to compare quotes you received years apart.</description>
+</item>
+<item>
+<title>Guangzhou vs Yiwu: which market should your first China sourcing trip visit?</title>
+<link>https://gochina.events/blog/guangzhou-vs-yiwu-where-to-source/</link>
+<guid>https://gochina.events/blog/guangzhou-vs-yiwu-where-to-source/</guid>
+<pubDate>Sun, 20 Sep 2026 00:00:00 GMT</pubDate>
+<description>Category fit, order sizes, and how a first trip is usually split between the two — with honest tradeoffs.</description>
+</item>
+<item>
+<title>Reading factory tier signals: what the office lobby, the sample room and the loading bay tell you</title>
+<link>https://gochina.events/blog/reading-supplier-factory-tier-signals/</link>
+<guid>https://gochina.events/blog/reading-supplier-factory-tier-signals/</guid>
+<pubDate>Sun, 20 Sep 2026 00:00:00 GMT</pubDate>
+<description>On-site evidence you can check in a 20-minute walk-through — before trusting any claim sheet.</description>
+</item>
+<item>
+<title>Buying furniture for a small hotel project in China: rooms, rates and realistic lead times</title>
+<link>https://gochina.events/blog/hotel-furniture-project-buying-in-china/</link>
+<guid>https://gochina.events/blog/hotel-furniture-project-buying-in-china/</guid>
+<pubDate>Sun, 20 Sep 2026 00:00:00 GMT</pubDate>
+<description>A project-based sourcing tour: which suppliers, what approval chains, why 'one / same factory' rarely happens.</description>
+</item>
+</channel>
+</rss>

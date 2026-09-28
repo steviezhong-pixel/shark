@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>本地服务商合作申请（中文）</title>
+<meta name="description" content="酒店、车队、商务翻译、验货机构、货代物流合作申请。">
+<link rel="canonical" href="https://gochina.events/partners/local-services/">
+<link rel="stylesheet" href="/styles.css">
+<meta property="og:image" content="https://gochina.events/og.png">
+</head>
+<body>
+<header class="site-head">
+  <div class="wrap head-in">
+    <a class="brand" href="/">goChina<span>Events</span></a>
+    <nav class="mainnav"><a href="/">English site</a><a href="/partners/">合作入口</a></nav>
+  </div>
+</header>
+<main class="wrap zh">
+<h1>本地服务商合作</h1>
+<section class="card" id="apply">
+<h2>本地服务商合作申请</h2>
+<p>我们与酒店、车队、翻译、第三方验货和货代等本地服务商建立合作。请填实际服务范围与报价口径，方便匹配客户订单。</p>
+<form class="req" action="/api/partner/local-service" method="post" novalidate>
+  
+<div class="field"><label for="z-comp">公司名称 <span class="req">*</span></label>
+  <input id="z-comp" name="company" required></div>
+<div class="field"><label for="z-name">联系人 <span class="req">*</span></label>
+  <input id="z-name" name="name" required></div>
+<div class="field"><label for="z-phone">手机/微信 <span class="req">*</span></label>
+  <input id="z-phone" name="contact" required placeholder="手机号或微信号"></div>
+<div class="field"><label for="z-email">邮箱</label>
+  <input id="z-email" name="email" type="email"></div>
+
+  <fieldset>
+    <legend>服务与覆盖</legend>
+    <div class="field"><label for="z-svc">服务类型 <span class="req">*</span></label>
+      <select id="z-svc" name="service_type" required>
+        <option value="">请选择</option>
+        <option>车辆租赁/商务用车</option>
+        <option>酒店合作</option>
+        <option>商务翻译</option>
+        <option>验货机构</option>
+        <option>货代/物流</option>
+        <option>其他</option>
+      </select></div>
+    <div class="field"><label for="z-cities">覆盖城市 <span class="req">*</span></label>
+      <input id="z-cities" name="cities" required placeholder="如：广州+佛山+深圳"></div>
+    <div class="field"><label for="z-price">服务范围与报价说明</label>
+      <textarea id="z-price" name="message" placeholder="车型/房型/语种/服务内容/计价方式/取消规则等"></textarea></div>
+  </fieldset>
+  <input type="hidden" name="form_type" value="local_service">
+  <input type="hidden" name="lang" value="zh">
+  <div class="formmsg" role="status" aria-live="polite"></div>
+  <button type="submit" class="btn">提交合作申请</button>
+</form>
+</section><script>
+async function submitForm(f){
+  const msg=f.querySelector('.formmsg');
+  const btn=f.querySelector('button[type=submit]');
+  const show=(cls,txt)=>{msg.className='formmsg '+cls;msg.textContent=txt;msg.scrollIntoView({behavior:'smooth',block:'nearest'});};
+  msg.className='formmsg';msg.textContent='';
+  btn.disabled=true;
+  try{
+    const r=await fetch(f.action,{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'},body:new URLSearchParams(new FormData(f))});
+    const j=await r.json().catch(()=>({}));
+    if(r.ok&&j.ok){f.reset();show('ok',j.message||'提交成功，我们已收到您的资料。一般一个工作日内联系您。');}
+    else{show('err',(j&&j.error)||('提交失败（HTTP '+r.status+'）。请稍后重试或直接联系我们的邮箱。'));}
+  }catch(e){
+    show('err','网络错误——本次提交未送达，请重新提交。');
+  }finally{btn.disabled=false;}
+}
+document.querySelectorAll('form[data-ajax]').forEach(f=>{f.addEventListener('submit',e=>{e.preventDefault();submitForm(f);});});
+</script>
+</main>
+<footer class="site-foot"><div class="wrap foot-legal">
+<p>goChina Events 是独立商务接待与采购协调服务商，非任何第三方展会的主办方或官方售票机构。商务合作关系见 <a href="/commercial-disclosure/">披露页</a>。</p>
+</div></footer>
+</body>
+</html>

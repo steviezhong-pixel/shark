@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>买家小会：席位 / 对接 / 赞助合作（意向收集）</title>
+<meta name="description" content="面向中国企业：围绕展会的海外买家小会，席位、对接与赞助合作。活动未确认前仅收集意向。">
+<link rel="canonical" href="https://gochina.events/buyer-meetups/sponsorship/">
+<link rel="stylesheet" href="/styles.css">
+<meta property="og:image" content="https://gochina.events/og.png">
+</head>
+<body>
+<header class="site-head">
+  <div class="wrap head-in">
+    <a class="brand" href="/">goChina<span>Events</span></a>
+    <nav class="mainnav"><a href="/">English site</a><a href="/partners/">合作入口</a></nav>
+  </div>
+</header>
+<main class="wrap zh">
+
+<h1>买家小会：席位、对接与赞助合作</h1>
+<p>goChina Events 计划在展会期间举办小型商务交流：把<strong>品类清楚、经过筛选的海外买家</strong>与数量有限的匹配中国企业聚在一桌，洽谈在主展之外发生。</p>
+<div class="notice"><p><strong>请先注意：</strong>当前没有已确认的活动日期、场地和到场名单。此页只收集合作意向与需求匹配；在真实买家出席得到确认前，我们不销售任何席位或赞助。席位价格在活动确认后按此页登记的匹配度单独报价。</p></div>
+
+<section class="card" id="sponsor">
+<h2>买家小会赞助 / 参会合作意向</h2>
+<div class="notice"><p><strong>请先注意：</strong>目前尚未确认任何具体小会的日期、场地和已到场 ．买家名单。本页只收集合作意向和需求，用于<strong>确认真实组办条件后再正式报价和收款</strong>。我们不提前发售未保障的活动票，也不承诺买家到场。</p></div>
+<form class="req" action="/api/partner/sponsorship" method="post" novalidate>
+  
+<div class="field"><label for="z-comp">公司名称 <span class="req">*</span></label>
+  <input id="z-comp" name="company" required></div>
+<div class="field"><label for="z-name">联系人 <span class="req">*</span></label>
+  <input id="z-name" name="name" required></div>
+<div class="field"><label for="z-phone">手机/微信 <span class="req">*</span></label>
+  <input id="z-phone" name="contact" required placeholder="手机号或微信号"></div>
+<div class="field"><label for="z-email">邮箱</label>
+  <input id="z-email" name="email" type="email"></div>
+
+  <fieldset>
+    <legend>您的业务与需求</legend>
+    <div class="field"><label for="z-ind">您的行业 / 产品 <span class="req">*</span></label>
+      <input id="z-ind" name="industry" required placeholder="如：宠物用品供应链 / 酒店家具"></div>
+    <div class="field"><label for="z-goal">希望接触的海外买家类型</label>
+      <input id="z-goal" name="target_buyers" placeholder="市场、品类、业务模式（如：美国电商卖场 / 中东酒店采购）"></div>
+    <div class="field"><label for="z-show">关注哪场展会？</label>
+      <input id="z-show" name="show" placeholder="如：广交会 / CIFS宠展 / HOTELEX…也可留空"></div>
+    <div class="field"><label for="z-note">想了解的合作内容</label>
+      <textarea id="z-note" name="message" placeholder="席位/对接/赞助：您希望获得什么权益或合作形式？"></textarea></div>
+  </fieldset>
+  <div class="field"><label style="font-weight:normal"><input type="checkbox" name="consent" value="yes" required> 我知道活动未确认，仅提交合作意向 <span class="req">*</span></label></div>
+  <input type="hidden" name="form_type" value="sponsorship">
+  <input type="hidden" name="lang" value="zh">
+  <div class="formmsg" role="status" aria-live="polite"></div>
+  <button type="submit" class="btn">提交意向</button>
+</form>
+</section>
+<script>
+async function submitForm(f){
+  const msg=f.querySelector('.formmsg');
+  const btn=f.querySelector('button[type=submit]');
+  const show=(cls,txt)=>{msg.className='formmsg '+cls;msg.textContent=txt;msg.scrollIntoView({behavior:'smooth',block:'nearest'});};
+  msg.className='formmsg';msg.textContent='';
+  btn.disabled=true;
+  try{
+    const r=await fetch(f.action,{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'},body:new URLSearchParams(new FormData(f))});
+    const j=await r.json().catch(()=>({}));
+    if(r.ok&&j.ok){f.reset();show('ok',j.message||'提交成功，我们已收到您的资料。一般一个工作日内联系您。');}
+    else{show('err',(j&&j.error)||('提交失败（HTTP '+r.status+'）。请稍后重试或直接联系我们的邮箱。'));}
+  }catch(e){
+    show('err','网络错误——本次提交未送达，请重新提交。');
+  }finally{btn.disabled=false;}
+}
+document.querySelectorAll('form[data-ajax]').forEach(f=>{f.addEventListener('submit',e=>{e.preventDefault();submitForm(f);});});
+</script>
+</main>
+<footer class="site-foot"><div class="wrap foot-legal">
+<p>goChina Events 是独立商务接待与采购协调服务商，非任何第三方展会的主办方或官方售票机构。商务合作关系见 <a href="/commercial-disclosure/">披露页</a>。</p>
+</div></footer>
+</body>
+</html>

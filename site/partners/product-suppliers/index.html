@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>产品供应商合作申请（中文）</title>
+<meta name="description" content="工厂与贸易公司合作申请：客户引荐、归属与佣金结算说明。">
+<link rel="canonical" href="https://gochina.events/partners/product-suppliers/">
+<link rel="stylesheet" href="/styles.css">
+<meta property="og:image" content="https://gochina.events/og.png">
+</head>
+<body>
+<header class="site-head">
+  <div class="wrap head-in">
+    <a class="brand" href="/">goChina<span>Events</span></a>
+    <nav class="mainnav"><a href="/">English site</a><a href="/partners/">合作入口</a></nav>
+  </div>
+</header>
+<main class="wrap zh">
+<h1>产品供应商合作</h1>
+<section class="card" id="apply">
+<h2>产品供应商合作申请</h2>
+<p>goChina Events 面向海外参展商与采购商提供商务接待、翻译、工厂/展厅访问与采购协调服务，为国内工厂与出口企业带来<strong>有明确采购需求的海外客户</strong>。欢迎提前填写申请；合作细节（客户归属、计佣范围、结算方式等）后续<strong>针对每个供应商单独商定，需要书面确认</strong>。</p>
+<p>我们不承诺任何具体佣金比例，也不虚构客户数量；实际合作按你们的产品范围和报价决定。</p>
+<form class="req" action="/api/partner/supplier" method="post" novalidate>
+  
+<div class="field"><label for="z-comp">公司名称 <span class="req">*</span></label>
+  <input id="z-comp" name="company" required></div>
+<div class="field"><label for="z-name">联系人 <span class="req">*</span></label>
+  <input id="z-name" name="name" required></div>
+<div class="field"><label for="z-phone">手机/微信 <span class="req">*</span></label>
+  <input id="z-phone" name="contact" required placeholder="手机号或微信号"></div>
+<div class="field"><label for="z-email">邮箱</label>
+  <input id="z-email" name="email" type="email"></div>
+
+  <fieldset>
+    <legend>产品与合作</legend>
+    <div class="field"><label for="z-cat">主营产品 / 品类 <span class="req">*</span></label>
+      <input id="z-cat" name="category" required placeholder="举例：现代风格休闲椅，主要出口欧美"></div>
+    <div class="field"><label for="z-moq">起订量 &amp; 定制能力</label>
+      <input id="z-moq" name="moq" placeholder="举例：MOQ 50起，可ODM；打样15天"></div>
+    <div class="field"><label for="z-exp">主要出口市场</label>
+      <input id="z-exp" name="export_markets" placeholder="如有：美国 / 德国 / 中东…没有也可写无"></div>
+    <div class="field"><label for="z-host">接待能力</label>
+      <input id="z-host" name="hosting" placeholder="展厅地址、可接待时间、谁来接待（老板/外贸）"></div>
+    <div class="field"><label for="z-intent">合作意向说明</label>
+      <textarea id="z-intent" name="message" placeholder="希望接触哪类买家？是否接受合作引荐费用？"></textarea></div>
+  </fieldset>
+  <input type="hidden" name="form_type" value="product_supplier">
+  <input type="hidden" name="lang" value="zh">
+  <div class="formmsg" role="status" aria-live="polite"></div>
+  <button type="submit" class="btn">提交合作申请</button>
+  <p style="font-size:.8rem;color:#98a1ab">我们仅将资料用于合作沟通，不会公开发布您的联络信息。见 <a href="/privacy/">隐私说明</a>。</p>
+</form>
+</section><script>
+async function submitForm(f){
+  const msg=f.querySelector('.formmsg');
+  const btn=f.querySelector('button[type=submit]');
+  const show=(cls,txt)=>{msg.className='formmsg '+cls;msg.textContent=txt;msg.scrollIntoView({behavior:'smooth',block:'nearest'});};
+  msg.className='formmsg';msg.textContent='';
+  btn.disabled=true;
+  try{
+    const r=await fetch(f.action,{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'},body:new URLSearchParams(new FormData(f))});
+    const j=await r.json().catch(()=>({}));
+    if(r.ok&&j.ok){f.reset();show('ok',j.message||'提交成功，我们已收到您的资料。一般一个工作日内联系您。');}
+    else{show('err',(j&&j.error)||('提交失败（HTTP '+r.status+'）。请稍后重试或直接联系我们的邮箱。'));}
+  }catch(e){
+    show('err','网络错误——本次提交未送达，请重新提交。');
+  }finally{btn.disabled=false;}
+}
+document.querySelectorAll('form[data-ajax]').forEach(f=>{f.addEventListener('submit',e=>{e.preventDefault();submitForm(f);});});
+</script>
+</main>
+<footer class="site-foot"><div class="wrap foot-legal">
+<p>goChina Events 是独立商务接待与采购协调服务商，非任何第三方展会的主办方或官方售票机构。商务合作关系见 <a href="/commercial-disclosure/">披露页</a>。</p>
+</div></footer>
+</body>
+</html>

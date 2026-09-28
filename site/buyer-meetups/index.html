@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Buyer Meetups Around China's Trade Fairs — Interest List</title>
+<meta name="description" content="Small-format evening meetups around major China trade fairs for overseas buyers. No confirmed events yet — interest list only; invitations match your categories and dates.">
+<link rel="canonical" href="https://gochina.events/buyer-meetups/">
+<link rel="alternate" hreflang="en" href="https://gochina.events/buyer-meetups/">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="stylesheet" href="/styles.css">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="goChina Events">
+<meta property="og:title" content="Buyer Meetups Around China's Trade Fairs — Interest List">
+<meta property="og:description" content="Small-format evening meetups around major China trade fairs for overseas buyers. No confirmed events yet — interest list only; invitations match your categories and dates.">
+<meta property="og:url" content="https://gochina.events/buyer-meetups/">
+<meta property="og:image" content="https://gochina.events/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Buyer Meetups Around China's Trade Fairs — Interest List">
+<meta name="twitter:description" content="Small-format evening meetups around major China trade fairs for overseas buyers. No confirmed events yet — interest list only; invitations match your categories and dates.">
+<meta name="twitter:image" content="https://gochina.events/og.png">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://gochina.events/#organization","name":"goChina Events","url":"https://gochina.events","description":"We develop China supply chains for overseas companies: supplier research and vetting, quote comparison, factory audits (coordinated), sampling and sample rounds, order milestones, pre-shipment inspection — remote from day one, with on-the-ground trips in Guangzhou-Foshan and Shanghai when buyers visit.","logo":"https://gochina.events/og.png","email":"mailto:contact@gochina.events","contactPoint":[{"@type":"ContactPoint","contactType":"customer service","email":"contact@gochina.events","telephone":"+8618224416343","availableLanguage":["en","zh"],"hoursAvailable":"Mo-Su 08:30-19:00"}]}</script>
+</head>
+<body>
+<header class="site-head">
+  <div class="wrap head-in">
+    <a class="brand" href="/">goChina<span>Events</span></a>
+    <button class="nav-toggle" aria-expanded="false" aria-controls="mainnav" aria-label="Open menu">Menu</button>
+    <nav class="mainnav" id="mainnav" aria-label="Main"><a href="/trade-shows/">Trade Shows</a><a href="/industries/">Industries</a><a href="/services/">Services</a><a href="/business-trips/">Business Trips</a><a href="/buyer-meetups/">Buyer Meetups</a><a class="cta ghost" href="https://wa.me/8618224416343" rel="noopener" target="_blank">WhatsApp</a><a class="cta" href="/plan-your-trip/">Plan My Trip</a></nav>
+  </div>
+</header>
+<a class="wa-float" href="https://wa.me/8618224416343" rel="noopener" target="_blank" aria-label="Chat on WhatsApp">WhatsApp</a>
+<div class="wrap crumbs-wrap"><nav class="crumbs" aria-label="Breadcrumb"><a href="/">goChina Events</a> <span class="sep">/</span> <span aria-current="page">Buyer Meetups</span></nav></div>
+<main class="wrap">
+
+<h1>Buyer meetups</h1>
+<p>We are building small evening events around major fairs: a curated table of overseas buyers, matched with a small number of selected Chinese suppliers, in a format without the sales swarm.</p>
+<div class="notice"><p><strong>Status:</strong> no event dates, venues or confirmed attendee numbers exist yet, so none are published. Sponsorship is only offered after real buyer attendance is confirmed — we do not pre-sell unconfirmed seats.</p></div>
+
+<section class="card" id="meetups-form">
+  <h2>Buyer meetups — interest list</h2>
+  <p>No events are confirmed yet — this form only records your interest matching so invitations reach the right people when an event becomes real.</p>
+  <form class="req" action="/api/meetup" method="post" novalidate>
+    <div class="field"><label for="m-name">Name <span class="req">*</span></label>
+      <input id="m-name" name="name" required></div>
+    <div class="field"><label for="m-contact">Email or WhatsApp <span class="req">*</span></label>
+      <input id="m-contact" name="contact" type="text" required></div>
+    <div class="field"><label for="m-role">You are a <span class="req">*</span></label>
+      <select id="m-role" name="attendee_type" required>
+        <option value="">Select…</option>
+        <option>Buyer / importer</option>
+        <option>E-commerce seller</option>
+        <option>Supplier / factory representative</option>
+        <option>Agent / intermediary</option>
+      </select></div>
+    <div class="field"><label for="m-country">Your country / market <span class="req">*</span></label>
+      <input id="m-country" name="country" required></div>
+    <div class="field"><label for="m-show">Trade show you plan to attend</label>
+      <input id="m-show" name="show" placeholder="e.g. Canton Fair / CIPS / HOTELEX — or none"></div>
+    <div class="field"><label for="m-cat">Product categories you buy or sell</label>
+      <input id="m-cat" name="categories"></div>
+    <div class="field"><label for="m-date">Expected dates in China</label>
+      <input id="m-date" name="dates"></div>
+    <div class="field"><label style="font-weight:normal"><input type="checkbox" name="open_refs" value="yes"> OK to receive matched supplier introductions</label></div>
+    <input type="hidden" name="lang" value="en">
+    <input type="hidden" name="company_website" value=""><!-- honeypot -->
+    <div class="formmsg" role="status" aria-live="polite"></div>
+    <button type="submit" class="btn">Add me to the interest list</button>
+  </form>
+</section>
+<script>
+async function submitForm(f){
+  const msg=f.querySelector('.formmsg');
+  const btn=f.querySelector('button[type=submit]');
+  const show=(cls,txt)=>{msg.className='formmsg '+cls;msg.textContent=txt;msg.scrollIntoView({behavior:'smooth',block:'nearest'});};
+  msg.className='formmsg';msg.textContent='';
+  btn.disabled=true;btn.setAttribute('aria-busy','true');
+  try{
+    const r=await fetch(f.action,{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'},body:new URLSearchParams(new FormData(f))});
+    const j=await r.json().catch(()=>({}));
+    if(r.ok&&j.ok){f.reset();show('ok',j.message||'Thank you. Your inquiry has been received. We reply within one business day.');}
+    else{show('err',(j&&j.error)||('Submission failed (HTTP '+r.status+'). Please retry or use our contact page.'));}
+  }catch(e){
+    show('err','Network error — your inquiry was NOT sent. Please retry.');
+  }finally{btn.disabled=false;btn.removeAttribute('aria-busy');}
+}
+document.querySelectorAll('form[data-ajax]').forEach(f=>{f.addEventListener('submit',e=>{e.preventDefault();submitForm(f);});});
+</script>
+</main>
+<footer class="site-foot">
+  <div class="wrap foot-in">
+    <div class="fcol"><h4>Plan</h4><a href="/plan-your-trip/">Plan My Trip (inquiry)</a><a href="/how-it-works/">How it works</a><a href="/pricing/">Pricing &amp; fees</a><a href="/destinations/">Cities</a><a href="/guides/">Guides</a></div><div class="fcol"><h4>Trust</h4><a href="/supplier-selection/">How we screen suppliers</a><a href="/commercial-disclosure/">Commercial disclosure</a><a href="/about/">About &amp; team</a><a href="/case-studies/">Case studies</a><a href="/contact/">Contact</a></div><div class="fcol"><h4>China partners (中文)</h4><a href="/partners/">合作伙伴入口</a><a href="/partners/product-suppliers/">产品供应商合作</a><a href="/partners/local-services/">本地服务商合作</a><a href="/buyer-meetups/sponsorship/">买家小会赞助合作</a></div><div class="fcol"><h4>Policies</h4><a href="/privacy/">Privacy</a><a href="/terms/">Terms of service</a><a href="/cancellations/">Cancellations &amp; refunds</a></div>
+  </div>
+  <div class="wrap foot-legal">
+    <p><strong>Contact:</strong> <a href="mailto:contact@gochina.events">contact@gochina.events</a> · WhatsApp <a href="https://wa.me/8618224416343" rel="noopener" target="_blank">+86 182 2441 6343</a> · Mon–Sun 8:30–19:00 (China Standard Time)</p>
+    <p>goChina Events is an independent China supply-chain development provider for overseas companies: supplier research & vetting, quote comparison, coordinated factory audits, sampling and order management — remote from day one, with on-the-ground support in Guangzhou-Foshan and Shanghai. Trade show trip support is one of our entry services, not our core business. Commercial relationships with suppliers are disclosed on <a href="/commercial-disclosure/">our disclosure page</a>.</p>
+    <p class="trial">© 2026 goChina Events · new-service preview: we reply to every enquiry, and you can verify us on one scheduled call before paying anything.</p>
+  </div>
+</footer>
+<script>
+(function(){
+  var t=document.querySelector('.nav-toggle');
+  if(!t)return;
+  t.addEventListener('click',function(){
+    var open=t.getAttribute('aria-expanded')==='true';
+    t.setAttribute('aria-expanded',open?'false':'true');
+    document.body.classList.toggle('nav-open',!open);
+  });
+})();</script>
+<script>
+fetch('/api/track',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({
+p:location.pathname,r:document.referrer.slice(0,200),l:navigator.language.slice(0,10),w:window.innerWidth
+})});
+</script>
+</body>
+</html>
