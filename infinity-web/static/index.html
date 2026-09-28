@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Infinity Web — fingerprint browser control</title>
+<style>
+  body{font:15px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;margin:0;background:#0f1c1a;color:#e6efec}
+  .wrap{max-width:920px;margin:0 auto;padding:24px}
+  h1{font-size:1.5rem;margin:0 0 4px} .sub{color:#9ab7b1;font-size:.9rem}
+  .row{display:flex;gap:10px;margin:14px 0;align-items:center;flex-wrap:wrap}
+  input,button{padding:9px 14px;border-radius:8px;border:1px solid #26645f;color:#e6efec;font:inherit;background:#132a27}
+  button{background:#0f5c56;border:0;cursor:pointer;font-weight:600}
+  button:hover{background:#0a423e}
+  table{width:100%;border-collapse:collapse;margin-top:16px}
+  th,td{padding:10px;border-bottom:1px solid #1d3a36;text-align:left;font-size:.92rem}
+  .stop{color:#ff7d7d;border:1px solid #5e3a3a;padding:5px 12px;border-radius:6px;background:none;cursor:pointer}
+  .hint{color:#7d9b95;font-size:.85rem}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Infinity Web</h1>
+  <p class="sub">Launch fingerprinted browsers (Camoufox engine) on the server and use them from this tab. Multiple profiles, autosaved cookies, native-level anti-detection.</p>
+  <div class="row">
+    <label>Profile name
+      <input id="prof" placeholder="e.g. seller-1" size="14">
+    </label>
+    <button onclick="launch()">Launch</button>
+    <button onclick="refresh()">⟳ Refresh</button>
+  </div>
+  <p class="hint">Each launch opens in a <b>new tab</b>. Max <b>2</b> simultaneous instances.</p>
+
+  <table>
+    <thead><tr><th>Profile (running)</th><th>Display</th><th>Open</th><th>Actions</th></tr></thead>
+    <tbody id="rows"></tbody>
+  </table>
+</div>
+<script>
+const TOKEN = decodeURIComponent(location.pathname.split('/')[2]);
+const API = '/browser/' + TOKEN;
+
+async function refresh(){
+  const j = await (await fetch(API + '/health')).json();
+  const rows = document.getElementById('rows'); rows.innerHTML = '';
+  const T = encodeURIComponent(TOKEN);
+  for (const p of Object.keys(j.sessions || {})) {
+    const s = j.sessions[p];
+    const tr = document.createElement('tr');
+    tr.innerHTML =
+      `<td>${p}</td><td>:${s.display}</td>` +
+      `<td><a target="_blank" rel="noopener" href="${API}/vnc/vnc.html?host=${encodeURIComponent(location.hostname)}&port=${s.ws}&path=${encodeURIComponent(INVNC(s.ws))}">Open tab ▸</a></td>` +
+      `<td><button class="stop" onclick="stop('${p}')">stop</button></td>`;
+    rows.appendChild(tr);
+  }
+  if (!Object.keys(j.sessions).length)
+    rows.innerHTML = '<tr><td colspan="4" style="color:#7d9b95">No browsers running.</td></tr>';
+}
+const INVNC = ws => 'browser/' + TOKEN + '/ws/' + ws;
+
+async function launch(){
+  const p = document.getElementById('prof').value.trim();
+  if(!p){ alert('Profile name required'); return; }
+  const j = await (await fetch(API + '/api/launch', {method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body: JSON.stringify({profile:p})})).json();
+  if(!j.ok){ alert(j.error || 'launch failed'); return; }
+  openTab(p, j.ws);
+}
+function openTab(p, ws){
+  const url = `${API}/vnc/vnc.html?host=${encodeURIComponent(location.hostname)}&port=${ws}&path=` +
+              encodeURIComponent(INVNC(ws));
+  window.open(url, '_blank', 'width=1250,height=840');
+  setTimeout(refresh, 600);
+}
+async function stop(p){
+  if(!confirm('Stop "'+p+'"? Unsaved pages will close.')) return;
+  fetch(API + '/api/stop', {method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body: JSON.stringify({profile:p})});
+  setTimeout(refresh, 400);
+}
+refresh(); setInterval(refresh, 8000);
+</script>
+</body>
+</html>
